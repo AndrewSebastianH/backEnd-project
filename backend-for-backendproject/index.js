@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import UserRoute from "./routes/user-route.js";
 import SneakerRoute from "./routes/sneaker-route.js";
+
+dotenv.config();
 
 const app = express();
 app.use(cors());
