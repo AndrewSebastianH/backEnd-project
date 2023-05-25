@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,26 +11,28 @@ import DoNotStepIcon from '@mui/icons-material/DoNotStep';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useState} from "react";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function Register() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confPassword, setConfPassword] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async(event) => {
         event.preventDefault();
         try {
-            await axios.post('http://localhost:3030/login',{
+            await axios.post('http://localhost:3030/users',{
+                name: name,
                 email:email,
                 password:password,
+                confPassword: confPassword
             });
-            navigate("/sneakers");
+            navigate("/");
         }catch (error) {
             if(error.response){
                 setErrMsg(error.response.data.msg);
@@ -60,16 +61,28 @@ export default function SignIn() {
                         <DoNotStepIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        sok Login
+                        Register dulu gak sih
                     </Typography>
-                    <Typography
-                        sx={{
-                            color: 'red'
-                        }}
-                    >
-                        {errMsg}
-                    </Typography>
+
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                        <Typography
+                            sx={{
+                                color: 'red'
+                            }}
+                        >
+                            {errMsg}
+                        </Typography>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Name"
+                            name="name"
+                            autoFocus
+                            value={name}
+                            onChange={(e)=> setName(e.target.value)}
+                        />
                         <TextField
                             margin="normal"
                             required
@@ -80,10 +93,7 @@ export default function SignIn() {
                             autoComplete="email"
                             autoFocus
                             value={email}
-                            onChange={(e)=>
-                                setEmail(e.target.value)
-                            }
-
+                            onChange={(e)=> setEmail(e.target.value)}
                         />
                         <TextField
                             margin="normal"
@@ -93,10 +103,20 @@ export default function SignIn() {
                             label="Password"
                             type="password"
                             id="password"
+                            autoComplete="current-password"
                             value={password}
-                            onChange={(e)=>
-                                setPassword(e.target.value)
-                            }
+                            onChange={(e)=> setPassword(e.target.value)}
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="confirmPassword"
+                            label="Confirm Password"
+                            type="password"
+                            id="confPassword"
+                            value={confPassword}
+                            onChange={(e)=> setConfPassword(e.target.value)}
                         />
                         <Button
                             type="submit"
@@ -105,12 +125,12 @@ export default function SignIn() {
                             color="success"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Register
                         </Button>
                         <Grid container>
                             <Grid item>
-                                <Link href="/register" variant="body2">
-                                    {"Click here to register"}
+                                <Link href="/" variant="body2">
+                                    {"Have an account? Login here"}
                                 </Link>
                             </Grid>
                         </Grid>

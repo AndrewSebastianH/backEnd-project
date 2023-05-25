@@ -5,6 +5,7 @@ import {getSneakersItems} from "../data/SneakersData";
 import {Avatar, Typography} from "@mui/material";
 import {Button} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import TopDrawer from "./TopDrawer";
 
 const columns = [
     {field: 'id', headerName: 'ID', width: 70},
@@ -62,36 +63,39 @@ const SneakerList = () => {
     }, []);
     console.log(sneakers)
     return (
-        <div style={{height: 400, width: '100%'}}>
-            <Typography variant="h3" sx={{marginLeft: 5}}>Sneakers List</Typography>
-            <Button
-                onClick={ ()=>navigate('/add') }
-                variant="contained"
-                color="success"
-                sx ={{
-                    marginLeft: 5,
-                    marginTop: 5
-                }}
-            >
-                Add Sneaker
-            </Button>
-            <DataGrid
-                rowHeight={100}
-                sx={{
-                    margin: 5
-                }}
-                rows={sneakers}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {page: 0, pageSize: 5},
-                    },
-                }}
-                pageSizeOptions={[5, 10]}
-                checkboxSelection
-                disableRowSelectionOnClick
-            />
-        </div>
+        <>
+            <TopDrawer/>
+            <div style={{height: 400, width: '100%'}}>
+                <Typography variant="h3" sx={{marginLeft: 5}}>Sneakers List</Typography>
+                <Button
+                    onClick={() => navigate('/add')}
+                    variant="contained"
+                    color="success"
+                    sx={{
+                        marginLeft: 5,
+                        marginTop: 5
+                    }}
+                >
+                    Add Sneaker
+                </Button>
+                <DataGrid
+                    rowHeight={100}
+                    sx={{
+                        margin: 5
+                    }}
+                    rows={sneakers}
+                    columns={columns}
+                    initialState={{
+                        pagination: {
+                            paginationModel: {page: 0, pageSize: 5},
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                    checkboxSelection
+                    disableRowSelectionOnClick
+                />
+            </div>
+        </>
     );
 }
 
