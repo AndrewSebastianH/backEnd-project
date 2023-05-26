@@ -6,6 +6,7 @@ import SignIn from "./components/LoginPage";
 import Register from "./components/RegisterPage";
 import TopDrawer from "./components/TopDrawer";
 import AddSneaker from "./components/AddSneaker";
+import EditSneaker from "./components/EditSneaker";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/sneakers" element={<SneakerList/>}/>
                 <Route path="/users" element={<UserList/>}/>
                 <Route path="/sneakers/add" element={<AddSneaker/>}/>
+                <Route path="/sneakers/edit/:id" element={<EditSneaker/>}/>
             </Routes>
         </BrowserRouter>
     );
