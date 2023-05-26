@@ -20,7 +20,7 @@ export const Register = async(req,res) => {
     }
 }
 
-export const Login = async(req,res) => {
+export const Login = async(req, res) => {
     try {
         const user = await User.findAll({
             where:{
@@ -34,22 +34,23 @@ export const Login = async(req,res) => {
         const name = user[0].name;
         const email = user[0].email;
         const accessToken = jwt.sign({userId,name,email}, process.env.ACCESS_TOKEN_SECRET,{
-            expiresIn: '60s'
+            expiresIn: '30s'
         });
         const refreshToken = jwt.sign({userId,name,email}, process.env.REFRESH_TOKEN_SECRET,{
             expiresIn: '1d'
         });
-        await User.update({refresh_token: refreshToken}, {
+        await User.update({ refresh_token: refreshToken }, {
             where: {
                 id: userId
             }
         });
-        res.cookie('refreshToken', refreshToken, {
+        await res.cookie('refreshToken', refreshToken, {
             httpOnly:true,
             maxAge: 24 * 60 * 60 * 1000,
             // secure:true
-        })
-        res.json({accessToken});
+        });
+        console.log({refreshToken});
+        res.json({ accessToken });
     } catch (error) {
         res.status(404).json({msg:"Email not found"});
     }
@@ -76,7 +77,9 @@ export const Logout = async(req, res) => {
 
 export const getUsers = async(req,res) =>{
     try{
-        const response = await User.findAll();
+        const response = await User.findAll({
+            attributes: ['id','name','email','createdAt','updatedAt']
+        });
         res.status(200).json(response);
     } catch (error) {
         console.log(error.message);
@@ -95,15 +98,6 @@ export const getUserByID = async(req,res) =>{
         console.log(error.message);
     }
 }
-
-// export const createUser = async(req,res) =>{
-//     try{
-//         await User.create(req.body);
-//         res.status(201).json({msg: "User Created."});
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 
 export const updateUser = async(req,res) =>{
     try{

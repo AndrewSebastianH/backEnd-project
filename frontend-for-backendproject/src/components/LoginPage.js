@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -32,16 +30,12 @@ export default function SignIn() {
                 password:password,
             });
             navigate("/sneakers");
+            // navigate("/test");
         }catch (error) {
             if(error.response){
                 setErrMsg(error.response.data.msg);
             }
         }
-        // const data = new FormData(event.currentTarget);
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
     };
 
     return (
@@ -56,7 +50,7 @@ export default function SignIn() {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'black' }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'red' }}>
                         <DoNotStepIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">

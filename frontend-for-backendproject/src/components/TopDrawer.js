@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Link} from 'react-router-dom';
 import {Button} from "@mui/material";
@@ -9,27 +8,34 @@ import {Toolbar} from "@mui/material";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
 
-import LocalCafeIcon from '@mui/icons-material/LocalCafe';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const TopDrawer = () => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const navigate = useNavigate();
     const toggleDrawer = () => {
         setIsOpen(!isOpen);
     };
 
+    const Logout = async() =>{
+        try{
+            await axios.delete('https://localhost:3030/logout')
+            navigate('/')
+        }catch (error){
+            console.log(error)
+        }
+    }
     return (
         <Box
             minWidth='100%'
             sx={{
                 position: 'fixed',
-                zIndex: 100,
             }}
         >
             <Box
@@ -131,32 +137,28 @@ const TopDrawer = () => {
                             </Button>
                         </Link>
                         <Divider/>
-                        <Link
-                            to="/"
-                            style={{textDecoration: "none"}}
+                        <Button
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column'
+                            }}
+                            onClick={Logout}
                         >
-                            <Button
+                            <ExitToAppIcon
                                 sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column'
+                                    fontSize: 50,
+                                    color: '#606C38',
+
+                                }}
+                            />
+                            <Typography
+                                sx={{
+                                    px: 5,
                                 }}
                             >
-                                <ExitToAppIcon
-                                    sx={{
-                                        fontSize: 50,
-                                        color: '#606C38',
-
-                                    }}
-                                />
-                                <Typography
-                                    sx={{
-                                        px: 5,
-                                    }}
-                                >
-                                    <h2>Logout</h2>
-                                </Typography>
-                            </Button>
-                        </Link>
+                                <h2>Logout</h2>
+                            </Typography>
+                        </Button>
                     </Toolbar>
                 </Box>
             </Drawer>

@@ -8,18 +8,39 @@ import DoNotStepIcon from '@mui/icons-material/DoNotStep';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-    const handleSubmit = (event) => {
+export default function AddSneaker() {
+    const navigate = useNavigate();
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        try {
+            await axios.post('http://localhost:3030/sneakers',{
+                sneakerName,
+                brand,
+                price,
+                description,
+                imageUrl
+            });
+            navigate('/sneakers')
+        } catch (error) {
+
+        }
     };
+
+    const [sneakerName, setSneakerName] = useState('');
+    const [brand, setBrand] = useState('');
+    const [price, setPrice] = useState('');
+    const [description, setDescription] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -47,6 +68,8 @@ export default function SignIn() {
                             id="sneakerName"
                             label="Sneaker Name"
                             name="sneakerName"
+                            value={sneakerName}
+                            onChange={(e)=> setSneakerName(e.target.value)}
                             autoFocus
                         />
                         <TextField
@@ -56,26 +79,41 @@ export default function SignIn() {
                             id="brand"
                             label="Brand Name"
                             name="brand"
+                            value={brand}
+                            onChange={(e)=> setBrand(e.target.value)}
+                            autoFocus
+                        />
+                        <FormControl fullWidth sx={{ marginTop: 1}}>
+                            <InputLabel>Price</InputLabel>
+                            <OutlinedInput
+                                id="price"
+                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                label="Price"
+                                value={price}
+                                onChange={(e)=> setPrice(e.target.value)}
+                            />
+                        </FormControl>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="description"
+                            label="Description"
+                            name="description"
+                            value={description}
+                            onChange={(e)=> setDescription(e.target.value)}
                             autoFocus
                         />
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            id="price"
-                            label="Price"
-                            name="price"
+                            id="imageUrl"
+                            label="Image Url Link"
+                            name="imageUrl"
+                            value={imageUrl}
+                            onChange={(e)=> setImageUrl(e.target.value)}
                             autoFocus
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
                         />
                         <Button
                             type="submit"
@@ -84,7 +122,7 @@ export default function SignIn() {
                             color="success"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Add Sneaker
                         </Button>
                     </Box>
                 </Box>

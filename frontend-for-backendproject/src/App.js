@@ -4,6 +4,8 @@ import SneakerList from "./components/SneakerList";
 import {ImportantDevices} from "@mui/icons-material";
 import SignIn from "./components/LoginPage";
 import Register from "./components/RegisterPage";
+import TopDrawer from "./components/TopDrawer";
+import AddSneaker from "./components/AddSneaker";
 
 function App() {
     return (
@@ -13,6 +15,7 @@ function App() {
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/sneakers" element={<SneakerList/>}/>
                 <Route path="/users" element={<UserList/>}/>
+                <Route path="/sneakers/add" element={<AddSneaker/>}/>
             </Routes>
         </BrowserRouter>
     );
