@@ -1,168 +1,56 @@
-import React, {useState} from 'react';
-import Drawer from '@mui/material/Drawer';
-import MenuIcon from '@mui/icons-material/Menu';
-import {Link} from 'react-router-dom';
-import {Button} from "@mui/material";
-
-import {Toolbar} from "@mui/material";
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Divider from "@mui/material/Divider";
-
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
-import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import axios from 'axios';
+import {useNavigate} from "react-router-dom";
+import { AppBar, Toolbar, Typography, Button, Container } from '@mui/material';
+import { Link } from 'react-router-dom'
 
 const TopDrawer = () => {
-    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
-    const toggleDrawer = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const Logout = async() =>{
+    const logout = async() => {
         try{
-            await axios.delete('https://localhost:3030/logout')
-            navigate('/')
-        }catch (error){
-            console.log(error)
+            await axios.delete('http://localhost:3030/logout');
+            navigate("/");
+        }catch (e) {
+            console.log(e)
         }
     }
+
     return (
-        <Box
-            minWidth='100%'
-            sx={{
-                position: 'fixed',
-            }}
-        >
-            <Box
-                display='flex'
-                justifyContent='flex-end'
-            >
-                <Button
-                    color="success"
-                    variant="contained"
-                    onClick={toggleDrawer}
-                    sx={{
-                        borderRadius: 35,
-                        padding: 4.5,
-                        margin: 6,
-                        width: 60,
-                        height: 60
-                    }}
-                >
-                    <MenuIcon sx={{fontSize: 35, color: 'white'}}/>
-                </Button>
-            </Box>
-            <Drawer
-                sx={{
-                    height: '100%',
-                    top: 0,
-                    left: 0,
-                    position: 'fixed',
-                }}
-                anchor="top"
-                open={isOpen}
-                onClose={toggleDrawer}
-            >
-                <Box>
-                    <Toolbar
-                        sx={{
-                            height: 170,
-                        }}
-                    >
-                        <Typography
-                            sx={{
-                                color: '#606c38',
-                                marginRight: "auto"
-                            }}
-                        >
-                            <h2>Backend Project Sneaker Shop</h2>
+        <>
+            <AppBar position="fixed" style={{ backgroundColor: '#292b2c' }}>
+                <Container maxWidth="xl">
+                    <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Typography variant="h6" style={{ fontWeight: 'bold' }}>
+                            Backend Project
                         </Typography>
-
-                        <Link
-                            to="/sneakers"
-                            style={{textDecoration: "none"}}
-                        >
+                        <div>
                             <Button
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column'
-                                }}
+                                color="inherit"
+                                style={{ marginRight: '1rem' }}
+                                component={Link} to="/sneakers"
                             >
-                                <RestaurantMenuIcon
-                                    sx={{
-                                        fontSize: 50,
-                                        color: '#606C38'
-                                    }}
-                                />
-                                <Typography
-                                    sx={{
-                                        px: 2,
-                                    }}
-                                >
-                                    <h2>Sneakers</h2>
-                                </Typography>
+                                Sneakers
                             </Button>
-                        </Link>
-                        <Divider/>
-                        <Link
-                            to="/users"
-                            style={{
-                                textDecoration: "none"
-                            }}
-                        >
                             <Button
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column'
-                                }}
+                                color="inherit"
+                                style={{ marginRight: '1rem' }}
+                                component={Link} to="/users"
                             >
-                                <ShoppingBasketIcon
-                                    sx={{
-                                        fontSize: 50,
-                                        color: '#606C38'
-                                    }}
-                                />
-                                <Typography
-                                    sx={{
-                                        px: 5,
-                                    }}
-                                >
-                                    <h2>Users</h2>
-                                </Typography>
+                                Users
                             </Button>
-                        </Link>
-                        <Divider/>
-                        <Button
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column'
-                            }}
-                            onClick={Logout}
-                        >
-                            <ExitToAppIcon
-                                sx={{
-                                    fontSize: 50,
-                                    color: '#606C38',
-
-                                }}
-                            />
-                            <Typography
-                                sx={{
-                                    px: 5,
-                                }}
+                            <Button
+                                color="inherit"
+                                style={{ marginRight: '1rem' }}
+                                onClick={logout}
                             >
-                                <h2>Logout</h2>
-                            </Typography>
-                        </Button>
+                                Logout
+                            </Button>
+                        </div>
                     </Toolbar>
-                </Box>
-            </Drawer>
-        </Box>
+                </Container>
+            </AppBar>
+            <Toolbar />
+        </>
     );
 };
 

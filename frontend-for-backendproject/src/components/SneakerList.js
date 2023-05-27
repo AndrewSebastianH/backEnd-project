@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Avatar, Typography } from "@mui/material";
+import { Avatar, Typography , AppBar} from "@mui/material";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import TopDrawer from "./TopDrawer";
@@ -133,10 +133,10 @@ const SneakerList = () => {
 
     return (
         <>
-            <TopDrawer />
+            <TopDrawer/>
             <div style={{ height: 400, width: "100%" }}>
                 <Typography variant="h6" sx={{ marginLeft: 5 }}>
-                    Hello, {name} here is the
+                    Hello {name}, here is the
                 </Typography>
                 <Typography variant="h3" sx={{ marginLeft: 5 }} color="green">
                     Sneakers List

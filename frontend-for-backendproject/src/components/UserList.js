@@ -16,28 +16,6 @@ const columns = [
     {field: 'email', headerName: 'Email', width: 250},
     {field: 'createdAt', headerName: 'Created At', width: 250},
     {field: 'updatedAt', headerName: 'Last Updated', width: 250},
-    {
-        field: "action",
-        headerName: "Actions",
-        sortable: false,
-        renderCell: (params) => {
-            const onClick = (e) => {
-
-            };
-            return <Button variant='contained' color='success' onClick={onClick}>Update</Button>;
-        }
-    },
-    {
-        field: "action2",
-        headerName: "",
-        sortable: false,
-        renderCell: (params) => {
-            const onClick = (e) => {
-
-            };
-            return <Button variant='contained' color='error' onClick={onClick}>Delete</Button>;
-        }
-    },
 ];
 
 const UserList = () => {
